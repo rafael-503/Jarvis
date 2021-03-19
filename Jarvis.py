@@ -16,7 +16,7 @@ def hora_():
     speak(Time)
 
 def data_():
-    day =datetime.datetime.now().day
+    day = datetime.datetime.now().day
     month = datetime.datetime.now().month
     year = datetime.datetime.now().year
     speak('Hoje é dia')
@@ -66,9 +66,10 @@ if __name__ == '__main__':
 
     while True:
         query = TakeCommand().lower()
+
         if 'hora' or 'horas' in query:
             hora_()
 
-        if 'data' or 'dia' in query:
+        elif 'data' or 'dia' in query:
             data_()
 
