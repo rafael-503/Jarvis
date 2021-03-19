@@ -9,13 +9,13 @@ def speak(audio):
     engine.say(audio)
     engine.runAndWait()
 
-def time_():
+def hora_():
     Time = datetime.datetime.now().strftime('%H:%M:%S') # for 24 hours clock
-    Time = datetime.datetime.now().strftime('%I:%M:%S') # for 12 hours clock
+    # Time = datetime.datetime.now().strftime('%I:%M:%S') # for 12 hours clock
     speak('Agora são')
     speak(Time)
 
-def date_():
+def data_():
     day =datetime.datetime.now().day
     month = datetime.datetime.now().month
     year = datetime.datetime.now().year
@@ -25,11 +25,9 @@ def date_():
     speak(year)
 
 def wishme():
-    speak('Bem vindo de volta!')
-    # time_()
-    # date_()
+    # hora_()
+    # data_()
 
-    # Greetings
     hour = datetime.datetime.now().hour
 
     if hour >=6 and hour <12:
@@ -40,7 +38,8 @@ def wishme():
         speak('Boa noite!')
     else:
         speak('Good night')
-    
+
+    speak('Bem vindo de volta!')
     speak('Estou a sua disposição, como posso ajudar?')
 
 def TakeCommand():
@@ -61,4 +60,16 @@ def TakeCommand():
         return 'None'
     return query
     
-TakeCommand()
+if __name__ == '__main__':
+
+    wishme()
+
+    while True:
+        query = TakeCommand().lower()
+    
+        if 'hora' or 'horas' in query:
+            hora_()
+
+        if 'data' or 'dia' in query:
+            data_()
+
