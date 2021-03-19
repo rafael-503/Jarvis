@@ -56,7 +56,7 @@ def TakeCommand():
 
     except Exception as e:
         print(e)
-        print('Fale novamente por favor....')
+        speak('Não entendi por favor repita')
         return 'None'
     return query
     
@@ -66,7 +66,6 @@ if __name__ == '__main__':
 
     while True:
         query = TakeCommand().lower()
-    
         if 'hora' or 'horas' in query:
             hora_()
 
