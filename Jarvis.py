@@ -1,5 +1,6 @@
 import pyttsx3
 import datetime
+import speech_recognition as sr
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -42,4 +43,22 @@ def wishme():
     
     speak('Estou a sua disposição, como posso ajudar?')
 
-wishme()
+def TakeCommand():
+    r=sr.Recognizer()
+    with sr.Microphone() as source:
+        print('Escutando....')
+        r.pause_threshold = 1
+        audio = r.listen(source)
+
+    try:
+        print('Reconhecendo....')
+        query = r.recognize_google(audio, language='pt-BR')
+        print(query)
+
+    except Exception as e:
+        print(e)
+        print('Fale novamente por favor....')
+        return 'None'
+    return query
+    
+TakeCommand()
