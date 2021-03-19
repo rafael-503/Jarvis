@@ -1,6 +1,7 @@
 import pyttsx3
 import datetime
 import speech_recognition as sr
+import wikipedia
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -86,6 +87,15 @@ if __name__ == '__main__':
         if 'hora' in query:
             hora_()
 
-        elif 'data' or 'dia' in query:
+        elif 'data' in query:
             data_()
+
+        elif 'wikipédia' in query:
+            speak('Procurando...')
+            query = query.replace('wikipedia', '')
+            wikipedia.set_lang('pt')
+            result = wikipedia.summary(query, sentences=3)
+            speak('De acordo com a Wikipedia')
+            speak(result)
+            print(result)
 
