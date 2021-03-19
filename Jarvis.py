@@ -17,11 +17,27 @@ def hora_():
 
 def data_():
     day = datetime.datetime.now().day
-    month = datetime.datetime.now().month
+    months = ["Unknown",
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"]
+    month=months[datetime.datetime.now().month]
+    # month = datetime.datetime.now().month
     year = datetime.datetime.now().year
     speak('Hoje é dia')
     speak(day)
+    speak('de')
     speak(month)
+    speak('de')
     speak(year)
 
 def wishme():
@@ -62,12 +78,12 @@ def TakeCommand():
     
 if __name__ == '__main__':
 
-    wishme()
+    # wishme()
 
     while True:
         query = TakeCommand().lower()
 
-        if 'hora' or 'horas' in query:
+        if 'hora' in query:
             hora_()
 
         elif 'data' or 'dia' in query:
