@@ -124,10 +124,14 @@ if __name__ == '__main__':
                 print(e)
                 speak('Não foi possivel enviar o email')
 
-        elif 'pesquisar' in query:
+        elif 'procurar no navegador' in query:
             speak('O que gostaria de pesquisar?')
-
-
-            browserPath = 'C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe %s'
+            browserPath = 'C:\Program Files\... (browser path) %s'
             search = TakeCommand().lower
             wb.get(browserPath).open_new_tab(search + '.com')
+
+        elif 'procurar no youtube' in query:
+            speak('O que deseja pesquisar?')
+            search_term = TakeCommand().lower()
+            speak('Procurando...')
+            wb.open('https//www.youtube.com/results?search_query='+ search_term)
