@@ -2,6 +2,8 @@ import pyttsx3
 import datetime
 import speech_recognition as sr
 import wikipedia
+import smtplib
+import webbrowser as wb
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -59,6 +61,15 @@ def wishme():
     speak('Bem vindo de volta!')
     speak('Estou a sua disposição, como posso ajudar?')
 
+    def sendEmail(to, content):
+        server=smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+
+        server.login('username@gmail.com', 'password')
+        server.sendmail('username@gmail.com', to, content)
+        server.close()
+
 def TakeCommand():
     r=sr.Recognizer()
     with sr.Microphone() as source:
@@ -99,3 +110,24 @@ if __name__ == '__main__':
             speak(result)
             print(result)
 
+        elif 'enviar e-mail' in query:
+            try:
+                speak('O que devo escrever?')
+                content = TakeCommand()
+                speak('Para quem devo mandar?')
+                reciever = input('Digite o email:')
+                to = reciever
+                sendEmail(to, content)
+                speak(content)
+                speak('O email foi enviado com sucesso')
+            except Exception as e:
+                print(e)
+                speak('Não foi possivel enviar o email')
+
+        elif 'pesquisar' in query:
+            speak('O que gostaria de pesquisar?')
+
+
+            browserPath = 'C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe %s'
+            search = TakeCommand().lower
+            wb.get(browserPath).open_new_tab(search + '.com')
