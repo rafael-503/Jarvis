@@ -197,6 +197,5 @@ if __name__ == '__main__':
         elif 'screenshot' or 'print' in query:
             screenshot()
 
-        # elif 'toque música' or 'toque a música' in query:
-        #     # Implement Music API
+
 
