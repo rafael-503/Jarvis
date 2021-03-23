@@ -10,9 +10,12 @@ import pyautogui
 import json 
 import requests
 from urllib.request import urlopen
+import wolframalpha
+import time
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
+wolframalpha_app_id = 'API KEY'
 
 def speak(audio):
     engine.say(audio)
@@ -84,9 +87,9 @@ def cpu():
     speak('A bateria está em')
     speak(battery.percent)
 
-# def screenshot():
-#     img = pyautogui.screenshot()
-#     img.save(C:\Users\UserName\Desktop\screenshot.png)
+def screenshot():
+    img = pyautogui.screenshot()
+    img.save('Path to save image')
 
 def TakeCommand():
     r=sr.Recognizer()
@@ -197,8 +200,8 @@ if __name__ == '__main__':
             speak(file.read())
             file.close()
 
-        # elif 'screenshot' or 'print' in query:
-        #     screenshot()
+        elif 'screenshot' or 'print' in query:
+            screenshot()
 
         elif 'me lembre' in query:
             speak('O que gostaria que eu lembrasse?')
@@ -235,3 +238,38 @@ if __name__ == '__main__':
                         quit()
             except Exception as e:
                 print(str(e))
+
+        elif 'calcule' in query:
+            client = wolframalpha.Client(wolframalpha_app_id)
+            indx = query.lower().split().index('calcule')
+            query = query.split()[indx + 1:]
+            res = client.query(''.join(query))
+            answer = next(res.results).text
+            print('O resultado é: '+ answer)
+            speak('O resultado é: '+ answer)
+
+        elif 'o que é' in query:
+            client = wolframalpha.Client(wolframalpha_app_id)
+            res = client.query(query)
+            language = 'portuguese'
+
+            try:
+                print(next(res.results).text)
+                speak(next(res.results).text)
+            except StopIteration:
+                print('Sem resultados')
+
+        elif 'pare de escutar' in query:
+            speak('Por quantos segundos gostaria que eu parasse de escutar os comandos?')
+            ans = int(TakeCommand())
+            time.sleep(ans)
+            print(ans)
+        
+        elif 'desligar o computador' in query:
+            os.system('shutdown -1')
+
+        elif 'reiniciar o computador' in query:
+            os.system('shutdown /r /t 1')
+
+        elif 'sair do computador' in query:
+            os.system('shutdown /s /t 1')
