@@ -6,6 +6,7 @@ import smtplib
 import webbrowser as wb
 import psutil
 import os
+import pyautogui
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -79,6 +80,10 @@ def cpu():
     battery = str(psutil.sensors_battery())
     speak('A bateria está em')
     speak(battery.percent)
+
+def screenshot():
+    img = pyautogui.screenshot()
+    img.save(C:\Users\UserName\Desktop\screenshot.png)
 
 def TakeCommand():
     r=sr.Recognizer()
@@ -188,3 +193,10 @@ if __name__ == '__main__':
             print(file.read())
             speak(file.read())
             file.close()
+
+        elif 'screenshot' or 'print' in query:
+            screenshot()
+
+        # elif 'toque música' or 'toque a música' in query:
+        #     # Implement Music API
+
