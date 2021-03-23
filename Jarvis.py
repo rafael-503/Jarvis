@@ -7,6 +7,9 @@ import webbrowser as wb
 import psutil
 import os
 import pyautogui
+import json 
+import requests
+from urllib.request import urlopen
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -81,9 +84,9 @@ def cpu():
     speak('A bateria está em')
     speak(battery.percent)
 
-def screenshot():
-    img = pyautogui.screenshot()
-    img.save(C:\Users\UserName\Desktop\screenshot.png)
+# def screenshot():
+#     img = pyautogui.screenshot()
+#     img.save(C:\Users\UserName\Desktop\screenshot.png)
 
 def TakeCommand():
     r=sr.Recognizer()
@@ -194,8 +197,41 @@ if __name__ == '__main__':
             speak(file.read())
             file.close()
 
-        elif 'screenshot' or 'print' in query:
-            screenshot()
+        # elif 'screenshot' or 'print' in query:
+        #     screenshot()
 
+        elif 'me lembre' in query:
+            speak('O que gostaria que eu lembrasse?')
+            memory = TakeCommand()
+            speak('Entendi, vou te lembrar quando você pedir')
+            remember = open('remember.txt','w')
+            remember.write(memory)
+            remember.close()
+        
+        elif 'pedi para lembrar' in query:
+            remember = open('remember.txt','r')
+            speak('Voce me pediu para lembrar disso'+ remember.read())
+            remember.close()
 
+        elif 'onde fica' in query:
+            query = query.replace('onde fica', '')
+            location = query
+            speak('Procurando local...')
+            wb.open_new_tab('https://www.google.com/maps/place'+ location)
 
+        elif 'notícias' in query:
+            try:
+                jsonObj = urlopen('https://newsapi.org/v2/top-headlines?country=br&apiKey= # API') # Include news api key
+                data = json.load(jsonObj)
+                i = 1
+
+                speak('Aqui estão as principais notícias de hoje')
+                for item in data['articles']:
+                    print(str(i)+ '. '+ item['title']+ '\n')
+                    print(item['description']+ '\n')
+                    speak(item['title'])
+                    i += 1
+                    if i == 6:
+                        quit()
+            except Exception as e:
+                print(str(e))
